@@ -8,39 +8,42 @@ public class mainRun
       {
         NodeList list = new NodeList();
 
-        list.Add(new Node(1));
-        list.Add(new Node(2));
-        list.Add(new Node(3));
-        list.Add(new Node(4));
-        list.Add(new Node(5));
-        list.Add(new Node(21), 1);
-        list.Add(new Node(31), 3);
-        list.Add(new Node(41), 5);
-        list.Add(new Node(6));
+        list.add(new Node(1));
+        list.add(new Node(2));
+        list.add(new Node(3));
+        list.add(new Node(4));
+        list.add(new Node(5));
+        list.add(new Node(21), 1);
+        list.add(new Node(31), 3);
+        list.add(new Node(41), 5);
+        list.add(new Node(6));
+
 
         System.out.println(list);
-        System.out.println("Count="+list.getCount());
+        System.out.println("Count="+list.getItemsCount());
 
-        list.Remove();
+        System.out.println("\nadding error="+list.add(new Node(61), 61));
+
+        list.remove();
 
         System.out.println("\nRemove last");
         System.out.println(list);
-        System.out.println("Count="+list.getCount());
+        System.out.println("Count="+list.getItemsCount());
 
-        list.Remove(2);
+        list.remove(2);
 
         System.out.println("\nRemove 2");
         System.out.println(list);
-        System.out.println("Count="+list.getCount());
+        System.out.println("Count="+list.getItemsCount());
 
-        list.Clear();;
+        list.clear();;
 
         System.out.println("\nRemove all");
         System.out.println(list);
-        System.out.println("Count="+list.getCount());
+        System.out.println("Count="+list.getItemsCount());
 
-        list.Add(new Node(222));
+        list.add(new Node(222));
         System.out.println(list);
-        System.out.println("Count="+list.getCount());
+        System.out.println("Count="+list.getItemsCount());
       }
 }

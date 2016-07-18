@@ -3,105 +3,110 @@ package classes;
 import classes.Consts;
 import classes.Node;
 
-
 public class NodeList {
-    // внутрение ссылки на голову и хвост списка
-    private Node data, last;
-    // количество элементов в списке
-    private int Count;
+
+    // list head reference
+    private Node data;
+    // list end reference
+    private Node last;
+    // items counter
+    private int itemsCount;
 
     public NodeList() {
         this.data = null;
         this.last = null;
-        this.Count = 0;
+        this.itemsCount = 0;
     }
 
-    public int getCount() {
-        return Count;
+    public int getItemsCount() {
+        return this.itemsCount;
     }
 
-
-    public void Clear() {
-        Node tmp = null, work = this.data;
-        // обнуляем ссылки на следующие Node в списке
-        while (work != null)
-        {
-            tmp = work.next;
-            work.next = null;
+    public void clear() {
+        // temporary variable for items exchange in cycle
+        Node tmp = null;
+        // current Node item in cycle
+        Node work = this.data;
+        // clearing next-reference
+        while (work != null) {
+            tmp = work.getNext();
+            work.setNext(null);
             work = tmp;
         }
         this.data = null;
         this.last = null;
-        Count = 0;
+        itemsCount = 0;
     }
 
-    // удалить с конца
-    public int Remove() {
-        return Remove(Count-1);
+    // delete Item from end of list
+    public int remove() {
+        return remove(itemsCount - 1);
     }
 
-    // удалить
-    public int Remove(int Index) {
-        if ((Index<0) || (Index>Count-1)) {
+    // delete any Item
+    public int remove(int index) {
+        if ((index < 0) || (index > itemsCount-1)) {
             return Consts.INDEX_IS_OUT_OF_RANGE;
-        } else if (Index>0) {
-            Node tmp = getItem(Index).next;
-            getItem(Index-1).next = tmp;
+        } else if (index > 0) {
+            Node tmp = getItem(index).getNext();
+            getItem(index - 1).setNext(tmp);
+        } else if (index == 0) {
+            this.data = this.data.getNext();
         }
-        return --Count;
+        return --itemsCount;
     }
 
-    // добавить в конец
-    public int Add(Node new_node) {
-        return Add(new_node, Count);
+    // add Item to end of list
+    public int add(Node newNode) {
+        return add(newNode, itemsCount);
     }
 
-    // добавить
-    public int Add(Node new_node, int Index) {
-        if (Index<0) {
+    // add Item at indexed position
+    public int add(Node newNode, int index) {
+        if ((index < 0) || (index > itemsCount)) {
             return Consts.INDEX_IS_OUT_OF_RANGE;
-        } else if (Count==0) {
-            this.data = new_node;
-            this.last = new_node;
-        } else if (Index>=Count) {
-                 getItem(Count-1).next = new_node;
-                 this.last = new_node;
+        } else if (itemsCount == 0) {
+            this.data = newNode;
+            this.last = newNode;
+        } else if (index == itemsCount) {
+            getItem(itemsCount - 1).setNext(newNode);
+            this.last = newNode;
         } else {
-                 Node tmp = getItem(Index).next;
-                 getItem(Index).next = new_node;
-                 new_node.next = tmp;
+            Node tmp = getItem(index).getNext();
+            getItem(index).setNext(newNode);
+            newNode.setNext(tmp);
         }
-      return ++Count;
+        return ++itemsCount;
     }
 
-    // получить Node по индексу
-    public Node getItem(int Index) {
+    // return Node by index
+    public Node getItem(int index) {
+        // returning value
         Node ret = data;
 
-        if ((Count==0) || (ret==null) || (Index>=Count)) {
+        if ((itemsCount == 0) || (ret == null) || (index >= itemsCount)) {
             return null;
         } else {
-                int i = 0;
-                while ((i != Index) && (i<=Count)) {
-                  ret = ret.next;
-                  i++;
-                }
+            int i = 0;
+            while ((i != index) && (i <= itemsCount)) {
+                ret = ret.getNext();
+                i++;
+            }
         }
         return ret;
     }
 
-
     @Override
     public String toString() {
-      String ret = "";
-      Node item = this.data;
-      while (item != null) {
-          ret += item.toString();
-          item = item.next;
-          if (item != null) {
-              ret += " ";
-          }
-      }
-      return ret;
+        String ret = "";
+        Node item = this.data;
+        while (item != null) {
+            ret += item.toString();
+            item = item.getNext();
+            if (item != null) {
+                ret += " ";
+            }
+        }
+        return ret;
     }
 }
